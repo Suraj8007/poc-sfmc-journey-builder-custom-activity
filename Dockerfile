@@ -24,7 +24,7 @@ FROM base AS final
 USER node
 COPY --from=deps /usr/src/app/package.json /usr/src/app/package-lock.json ./
 COPY --from=deps /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/dist ./dist
+
 EXPOSE 8080
 
 # Default CMD; NODE_ENV is set via .env or passed at runtime
