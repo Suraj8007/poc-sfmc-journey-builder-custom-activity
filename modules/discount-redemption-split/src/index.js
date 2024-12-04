@@ -58,7 +58,10 @@ function requestedInteraction(payload) {
 
     // determine the selected item (if there is one)
     if(activity.arguments.execute.inArguments) {
-        const existingSelection = activity.arguments.execute.inArguments[0].discount ?? activity.arguments.execute.inArguments[0].discountCode;
+        const discount = activity.arguments.execute.inArguments[0].discount;
+        const discountCode = activity.arguments.execute.inArguments[0].discountCode;
+
+        const existingSelection = (discount !== null && discount !== undefined) ? discount : discountCode;
 
         if(existingSelection.split('.').length == 3) {
             selectedValue = existingSelection.split('.')[1];
