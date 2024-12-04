@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG NODE_VERSION=20.15.1
+ARG NODE_VERSION=22.12.0
 
 # Base image setup
 FROM node:${NODE_VERSION}-alpine AS base
