@@ -174,9 +174,30 @@ function setupExampleTestHarness() {
         console.log('[echo] requestInspectorClose');
     });
 
-    jbSession.on('updateActivity', function(activity) {
+    jbSession.on('updateActivity', async function(activity) {
         console.log('[echo] updateActivity -> ', JSON.stringify(activity, null, 4));
+        // URL of the fake API
+        const apiUrl = "https://jsonplaceholder.typicode.com/users";
+    
+        try {
+            // Make a GET request to the fake API using async/await
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json(); // Parse the JSON response
+            console.log("API Response:", data);
+            // Example: Combine activity data with the API data if needed
+            const combinedData = {
+                activity: activity,
+                apiResponse: data
+            };
+            console.log("Combined Data:", JSON.stringify(combinedData, null, 4));
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     });
+    
 
     jbSession.on('ready', function() {
         console.log('[echo] ready');
