@@ -177,7 +177,7 @@ async function onDoneButtonClick() {
   // get the option that the user selected and save it to
   const select = document.getElementById("discount-code");
   const option = select.options[select.selectedIndex];
-  console.log('activity before setting discount value', activity.arguments.execute.inArguments);
+  console.log('activity before setting discount value', activity.arguments.execute.inArguments[0]);
   activity.arguments.execute.inArguments = [{
     discount: option.value,
     emailAddress: activity.arguments.execute.inArguments.emailAddress
