@@ -197,8 +197,8 @@ function setupExampleTestHarness() {
       metaData: {},
       configurationArguments: {},
       arguments: {
-        executionMode: "{{Context.EmailAddress}}",
-        definitionId: "{{Context.SubscriberKey}}",
+        executionMode: "{{Context.ExecutionMode}}",
+        definitionId: "{{Context.DefinitionId}}",
         activityId: "{{Activity.Id}}",
         contactKey: "{{Context.ContactKey}}",
         execute: {
