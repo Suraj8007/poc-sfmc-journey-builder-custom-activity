@@ -21,7 +21,7 @@ module.exports = function configJSON(req) {
         inArguments: [
           {
             discount: 10,
-            emailAddress: "{{JourneyBuilderCustomActivity_POC_BLR.EmailAddress}}",
+            emailAddress: "{{Contact.EmailAddress}}",
           },
         ],
         outArguments: [],
