@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function main() {
 function onInitActivity(payload) {
   // set the activity object from this payload. We'll refer to this object as we
   // modify it before saving.
-  console.log("payloadpayloadpayload", payload)
+  console.log("payloadpayloadpayload", Contact)
   activity = payload;
 
   const hasInArguments = Boolean(
