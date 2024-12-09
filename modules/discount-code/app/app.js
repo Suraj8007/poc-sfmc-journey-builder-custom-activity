@@ -87,7 +87,7 @@ module.exports = function discountCodeExample(app, options) {
      * 50x - Return if the configuration is invalid (this will block the publish phase)
      */
     app.post('/modules/discount-code/validate', function(req, res) {
-        console.log('debug: /modules/discount-code/validate');
+        console.log('debug: /modules/discount-code/validate', req, res);
         return res.status(200).json({});
     });
 
