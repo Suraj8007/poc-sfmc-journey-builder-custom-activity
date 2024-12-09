@@ -21,7 +21,7 @@ module.exports = function configJSON(req) {
         inArguments: [
           {
             discount: 10,
-            emailAddress: "{{Contact.SubscriberKey}}",
+            emailAddress: "{{SubscriberKey}}",
           },
         ],
         outArguments: [],
