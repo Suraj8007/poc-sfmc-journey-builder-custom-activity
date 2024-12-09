@@ -177,7 +177,7 @@ async function onDoneButtonClick() {
   // get the option that the user selected and save it to
   const select = document.getElementById("discount-code");
   const option = select.options[select.selectedIndex];
-  console.log("kwjdbahsdmjahsdg", activity);
+  console.log('activity before setting discount value', activity);
   activity.arguments.execute.inArguments = [{
     discount: option.value,
     emailAddress: activity.arguments.execute.inArguments.emailAddress
@@ -189,26 +189,6 @@ async function onDoneButtonClick() {
   console.log("Sending message back to updateActivity");
   console.log("saving\n", JSON.stringify(activity, null, 4));
   console.log("--------------------------------------------------------------");
-
-  // URL of the fake API
-  const apiUrl = "https://jsonplaceholder.typicode.com/users";
-  try {
-    // Make a GET request to the fake API using async/await
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json(); // Parse the JSON response
-    console.log("API Response:", data);
-    // Example: Combine activity data with the API data if needed
-    const combinedData = {
-      activity: activity,
-      apiResponse: data
-    };
-    console.log("Combined Data:", JSON.stringify(combinedData, null, 4));
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
   connection.trigger("updateActivity", activity);
 }
 function onCancelButtonClick() {
