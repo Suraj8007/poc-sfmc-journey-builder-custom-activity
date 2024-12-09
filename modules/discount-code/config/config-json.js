@@ -21,7 +21,7 @@ module.exports = function configJSON(req) {
         inArguments: [
           {
             discount: 10,
-            emailAddress: "test@gmail.com",
+            emailAddress: "{{InteractionDefaults.Email}}",
           },
         ],
         outArguments: [],
