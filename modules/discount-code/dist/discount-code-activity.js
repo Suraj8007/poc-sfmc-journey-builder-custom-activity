@@ -1,2 +1,646 @@
-/*! Salesforce Marketing Cloud - Journey Builder Custom Activities - discount-code */!function(e){var t={};function n(o){if(t[o])return t[o].exports;var r=t[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=e,n.c=t,n.d=function(e,t,o){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:o})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)n.d(o,r,function(t){return e[t]}.bind(null,r));return o},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=1)}([function(e,t,n){var o,r;r=this,void 0===(o=function(){return function(e){e=e||window;var t,n,o,r=r||void 0,i=e.Postmonger,c=e.addEventListener||e.attachEvent?e:window;return(t=void 0!==r?r:{}).noConflict=function(){return e.Postmonger=i,this},t.version="0.0.14",n=t.Connection=function(e){var t=(e="object"==typeof e?e:{}).connect||c.parent,n=e.from||"*",o=e.to||"*";return"string"==typeof t&&(t=document.getElementById(t)),t&&!t.postMessage&&t.jquery&&(t=t.get(0)),t&&!t.postMessage&&(t.contentWindow||t.contentDocument)&&(t=t.contentWindow||t.contentDocument),t&&t.postMessage?(this.connect=t,this.to=o,this.from=n,this):(c.console&&c.console.warn&&c.console.warn(" Warning: Postmonger could not establish connection with ",e.connect),!1)},o=t.Events=function(){var e=/\s+/,t=this;return t._callbacks={},t._has=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t._keys=function(e){if(Object.keys)return Object.keys(e);if("object"!=typeof e)throw new TypeError("Invalid object");var n=[];for(var o in e)t._has(e,o)&&(n[n.length]=o);return n},t.on=function(n,o,r){var i,c,s,a,l;if(!o)return t;for(n=n.split(e),t._callbacks=t._callbacks||{},i=t._callbacks;c=n.shift();)a={},(s=(l=i[c])?l.tail:{}).next=a,s.context=r,s.callback=o,i[c]={tail:a,next:l?l.next:s};return t},t.off=function(n,o,r){var i,c,s,a,l,u=t._callbacks;if(u){if(!(n||o||r))return delete t._callbacks,t;for(n=n?n.split(e):t._keys(u);i=n.shift();)if(c=u[i],delete u[i],c&&(o||r))for(s=c.tail;(c=c.next)!==s;)a=c.callback,l=c.context,(o&&a)===o&&(r&&l)===r||t.on(i,a,l);return t}},t.trigger=function(n){var o,r,i,c,s,a,l;if(!(i=t._callbacks))return t;for(a=i.all,n=n.split(e),l=Array.prototype.slice.call(arguments,1);o=n.shift();){if(r=i[o])for(c=r.tail;(r=r.next)!==c;)r.callback.apply(r.context||t,l);if(r=a)for(c=r.tail,s=[o].concat(l);(r=r.next)!==c;)r.callback.apply(r.context||t,s)}return t},t},t.Session=function(){var t,r,i,s,a,l,u=arguments.length>0?Array.prototype.slice.call(arguments,0):[{}],d=[],f=new o,g=new o,y=this;for(y.on=f.on,y.off=f.off,y.trigger=g.trigger,y.end=function(){return f.off(),g.off(),c.removeEventListener?c.removeEventListener("message",l,!1):c.detachEvent&&c.detachEvent("onmessage",l),y},r=0,s=u.length;r<s;r++)if(t=new n(u[r])){for(i=0,a=d.length;i<a;i++)if(d[i].connect===t.connect&&d[i].from===t.from&&d[i].to===t.to){t=null;break}t&&d.push(t)}if(l=function(t){var n,o,r,i=null,c=[];for(o=0,r=d.length;o<r;o++)if(d[o].connect===t.source){i=d[o];break}if(!i)return!1;if("*"!==i.from&&i.from!==t.origin)return!1;try{if(!(n=JSON.parse(t.data)).e)return!1}catch(e){return!1}for(o in c.push(n.e),delete n.e,n)c.push(n[o]);f.trigger.apply(e,c)},c.addEventListener)c.addEventListener("message",l,!1);else{if(!c.attachEvent)return c.console&&c.console.warn&&c.console.warn("WARNING: Postmonger could not listen for messages on window %o",c),!1;c.attachEvent("onmessage",l)}return g.on("all",(function(){var e,t,n=Array.prototype.slice.call(arguments,0),o={};for(o.e=n[0],e=1,t=n.length;e<t;e++)o["a"+e]=n[e];for(e=0,t=d.length;e<t;e++)d[e].connect.postMessage(JSON.stringify(o),d[e].to)})),y},t}(r)}.apply(t,[]))||(e.exports=o)},function(e,t,n){"use strict";n.r(t);var o=n(0),r=n.n(o);const i=new r.a.Session;let c=null;function s(e){c=e;const t=Boolean(c.arguments&&c.arguments.execute&&c.arguments.execute.inArguments&&c.arguments.execute.inArguments.length>0),n=t?c.arguments.execute.inArguments:[];console.log("-------- triggered:onInitActivity({obj}) --------"),console.log("activity:\n ",JSON.stringify(c,null,4)),console.log("Has In Arguments: ",t),console.log("inArguments",n),console.log("-------------------------------------------------");const o=n.find(e=>e.discount);console.log("Discount Argument",o),o&&function(e){const t=document.getElementById("discount-code").querySelector(`[value='${e}']`);t?(t.selected=!0,u()):console.log("Could not select value from list",`[value='${e}]'`)}(o.discount)}async function a(){c.metaData.isConfigured=!0;const e=document.getElementById("discount-code"),t=e.options[e.selectedIndex];c.arguments.execute.inArguments=[{discount:t.value}],c.name=`Issue ${c.arguments.execute.inArguments[0].discount}% Code`,console.log("------------ triggering:updateActivity({obj}) ----------------"),console.log("Sending message back to updateActivity"),console.log("saving\n",JSON.stringify(c,null,4)),console.log("--------------------------------------------------------------");try{const e=await fetch("https://jsonplaceholder.typicode.com/users");if(!e.ok)throw new Error("Network response was not ok");const t=await e.json();console.log("API Response:",t);const n={activity:c,apiResponse:t};console.log("Combined Data:",JSON.stringify(n,null,4))}catch(e){console.error("Error fetching data:",e)}i.trigger("updateActivity",c)}function l(){i.trigger("setActivityDirtyState",!1),i.trigger("requestInspectorClose")}function u(){document.getElementById("discount-code").selectedIndex?document.getElementById("done").removeAttribute("disabled"):document.getElementById("done").setAttribute("disabled",""),i.trigger("setActivityDirtyState",!0)}document.addEventListener("DOMContentLoaded",(function(){!function(){if("localhost"!==location.hostname&&"127.0.0.1"!==location.hostname)return;const e=new r.a.Session,t={};window.jb=t,e.on("setActivityDirtyState",(function(e){console.log("[echo] setActivityDirtyState -> ",e)})),e.on("requestInspectorClose",(function(){console.log("[echo] requestInspectorClose")})),e.on("updateActivity",(async function(e){console.log("[echo] updateActivity -> ",JSON.stringify(e,null,4))})),e.on("ready",(function(){console.log("[echo] ready"),console.log("\tuse jb.ready() from the console to initialize your activity")})),t.ready=function(){e.trigger("initActivity",{name:"",key:"EXAMPLE-1",metaData:{},configurationArguments:{},arguments:{executionMode:"{{Context.ExecutionMode}}",definitionId:"{{Context.DefinitionId}}",activityId:"{{Activity.Id}}",contactKey:"{{Context.ContactKey}}",execute:{inArguments:[{discount:10}],outArguments:[]},startActivityKey:"{{Context.StartActivityKey}}",definitionInstanceId:"{{Context.DefinitionInstanceId}}",requestObjectId:"{{Context.RequestObjectId}}"}})}}(),document.getElementById("done").addEventListener("click",a),document.getElementById("cancel").addEventListener("click",l),document.getElementById("discount-code").addEventListener("change",u),i.on("initActivity",s),i.trigger("ready")}))}]);
+/*! Salesforce Marketing Cloud - Journey Builder Custom Activities - discount-code */
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./modules/discount-code/src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./modules/discount-code/src/index.js":
+/*!********************************************!*\
+  !*** ./modules/discount-code/src/index.js ***!
+  \********************************************/
+/*! no exports provided */
+/*! all exports used */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var postmonger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! postmonger */ "./node_modules/postmonger/postmonger.js");
+/* harmony import */ var postmonger__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(postmonger__WEBPACK_IMPORTED_MODULE_0__);
+// JOURNEY BUILDER CUSTOM ACTIVITY - discountCode ACTIVITY
+// ````````````````````````````````````````````````````````````
+// This example demonstrates a custom activity that utilizes an external service to generate
+// a discount code where the user inputs the discount percent in the configuration.
+//
+// Journey Builder's Postmonger Events Reference can be found here:
+// https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/using-postmonger.htm
+
+// Custom activities load inside an iframe. We'll use postmonger to manage
+// the cross-document messaging between Journey Builder and the activity
+
+
+// Create a new connection for this session.
+// We use this connection to talk to Journey Builder. You'll want to keep this
+// reference handy and pass it into your UI framework if you're using React, Angular, Vue, etc.
+const connection = new postmonger__WEBPACK_IMPORTED_MODULE_0___default.a.Session();
+
+// we'll store the activity on this variable when we receive it
+let activity = null;
+
+// Wait for the document to load before we doing anything
+document.addEventListener("DOMContentLoaded", function main() {
+  // Setup a test harness so we can interact with our custom activity
+  // outside of journey builder using window functions & browser devtools.
+  // This isn't required by your activity, its for example purposes only
+  setupExampleTestHarness();
+
+  // setup our ui event handlers
+  setupEventHandlers();
+
+  // Bind the initActivity event...
+  // Journey Builder will respond with "initActivity" after it receives the "ready" signal
+  connection.on("initActivity", onInitActivity);
+
+  // We're all set! let's signal Journey Builder
+  // that we're ready to receive the activity payload...
+
+  // Tell the parent iFrame that we are ready.
+  connection.trigger("ready");
+});
+
+// this function is triggered by Journey Builder via Postmonger.
+// Journey Builder will send us a copy of the activity here
+function onInitActivity(payload) {
+  // set the activity object from this payload. We'll refer to this object as we
+  // modify it before saving.
+  activity = payload;
+  const hasInArguments = Boolean(activity.arguments && activity.arguments.execute && activity.arguments.execute.inArguments && activity.arguments.execute.inArguments.length > 0);
+  const inArguments = hasInArguments ? activity.arguments.execute.inArguments : [];
+  console.log("-------- triggered:onInitActivity({obj}) --------");
+  console.log("activity:\n ", JSON.stringify(activity, null, 4));
+  console.log("Has In Arguments: ", hasInArguments);
+  console.log("inArguments", inArguments);
+  console.log("-------------------------------------------------");
+
+  // check if this activity has an incoming argument.
+  // this would be set on the server side when the activity executes
+  // (take a look at execute() in ./discountCode/app.js to see where that happens)
+  const discountArgument = inArguments.find(arg => arg.discount);
+  console.log("Discount Argument", discountArgument);
+
+  // if a discountCode back argument was set, show the message in the view.
+  if (discountArgument) {
+    selectDiscountCodeOption(discountArgument.discount);
+  }
+
+  // if the discountCode back argument doesn't exist the user can pick
+  // a discountCode message from the drop down list. the discountCode back arg
+  // will be set once the journey executes the activity
+}
+async function onDoneButtonClick() {
+  // we set must metaData.isConfigured in order to tell JB that
+  // this activity is ready for activation
+  activity.metaData.isConfigured = true;
+
+  // get the option that the user selected and save it to
+  const select = document.getElementById("discount-code");
+  const option = select.options[select.selectedIndex];
+  activity.arguments.execute.inArguments = [{
+    discount: option.value
+  }];
+
+  // you can set the name that appears below the activity with the name property
+  activity.name = `Issue ${activity.arguments.execute.inArguments[0].discount}% Code`;
+  console.log("------------ triggering:updateActivity({obj}) ----------------");
+  console.log("Sending message back to updateActivity");
+  console.log("saving\n", JSON.stringify(activity, null, 4));
+  console.log("--------------------------------------------------------------");
+
+  // URL of the fake API
+  const apiUrl = "https://jsonplaceholder.typicode.com/users";
+  try {
+    // Make a GET request to the fake API using async/await
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json(); // Parse the JSON response
+    console.log("API Response:", data);
+    // Example: Combine activity data with the API data if needed
+    const combinedData = {
+      activity: activity,
+      apiResponse: data
+    };
+    console.log("Combined Data:", JSON.stringify(combinedData, null, 4));
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  connection.trigger("updateActivity", activity);
+}
+function onCancelButtonClick() {
+  // tell Journey Builder that this activity has no changes.
+  // we wont be prompted to save changes when the inspector closes
+  connection.trigger("setActivityDirtyState", false);
+
+  // now request that Journey Builder closes the inspector/drawer
+  connection.trigger("requestInspectorClose");
+}
+function onDiscountCodeSelectChange() {
+  // enable or disable the done button when the select option changes
+  const select = document.getElementById("discount-code");
+  if (select.selectedIndex) {
+    document.getElementById("done").removeAttribute("disabled");
+  } else {
+    document.getElementById("done").setAttribute("disabled", "");
+  }
+
+  // let journey builder know the activity has changes
+  connection.trigger("setActivityDirtyState", true);
+}
+function selectDiscountCodeOption(value) {
+  const select = document.getElementById("discount-code");
+  const selectOption = select.querySelector(`[value='${value}']`);
+  if (selectOption) {
+    selectOption.selected = true;
+    onDiscountCodeSelectChange();
+  } else {
+    console.log("Could not select value from list", `[value='${value}]'`);
+  }
+}
+function setupEventHandlers() {
+  // Listen to events on the form
+  document.getElementById("done").addEventListener("click", onDoneButtonClick);
+  document.getElementById("cancel").addEventListener("click", onCancelButtonClick);
+  document.getElementById("discount-code").addEventListener("change", onDiscountCodeSelectChange);
+}
+
+// this function is for example purposes only. it sets ups a Postmonger
+// session that emulates how Journey Builder works. You can call jb.ready()
+// from the console to kick off the initActivity event with a mock activity object
+function setupExampleTestHarness() {
+  const isLocalhost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  if (!isLocalhost) {
+    // don't load the test harness functions when running in Journey Builder
+    return;
+  }
+  const jbSession = new postmonger__WEBPACK_IMPORTED_MODULE_0___default.a.Session();
+  const jb = {};
+  window.jb = jb;
+  jbSession.on("setActivityDirtyState", function (value) {
+    console.log("[echo] setActivityDirtyState -> ", value);
+  });
+  jbSession.on("requestInspectorClose", function () {
+    console.log("[echo] requestInspectorClose");
+  });
+  jbSession.on("updateActivity", async function (activity) {
+    console.log("[echo] updateActivity -> ", JSON.stringify(activity, null, 4));
+  });
+  jbSession.on("ready", function () {
+    console.log("[echo] ready");
+    console.log("\tuse jb.ready() from the console to initialize your activity");
+  });
+
+  // fire the ready signal with an example activity
+  jb.ready = function () {
+    jbSession.trigger("initActivity", {
+      name: "",
+      key: "EXAMPLE-1",
+      metaData: {},
+      configurationArguments: {},
+      arguments: {
+        executionMode: "{{Context.ExecutionMode}}",
+        definitionId: "{{Context.DefinitionId}}",
+        activityId: "{{Activity.Id}}",
+        contactKey: "{{Context.ContactKey}}",
+        execute: {
+          inArguments: [{
+            discount: 10
+          }],
+          outArguments: []
+        },
+        startActivityKey: "{{Context.StartActivityKey}}",
+        definitionInstanceId: "{{Context.DefinitionInstanceId}}",
+        requestObjectId: "{{Context.RequestObjectId}}"
+      }
+    });
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/postmonger/postmonger.js":
+/*!***********************************************!*\
+  !*** ./node_modules/postmonger/postmonger.js ***!
+  \***********************************************/
+/*! no static exports found */
+/*! exports used: default */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * Postmonger.js   version 0.0.14
+ * https://github.com/kevinparkerson/postmonger
+ *
+ * Copyright (c) 2012-2014 Kevin Parkerson
+ * Available via the MIT or new BSD license.
+ * Further details and documentation:
+ * http://kevinparkerson.github.com/postmonger/
+ *
+ *///
+
+(function (root, factory) {
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () { return factory(root); }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}(this, function (root) {
+	root = root || window;
+
+	var exports = exports || undefined;
+	var Postmonger;
+	var previous = root.Postmonger;
+	var _window = (root.addEventListener || root.attachEvent) ? root : window;
+	var Connection, Events, Session;
+
+	//Set up Postmonger namespace, provide noConflict support, and version
+	if (typeof(exports) !== 'undefined') {
+		Postmonger = exports;
+	} else {
+		Postmonger = {};
+	}
+	Postmonger.noConflict = function () {
+		root.Postmonger = previous;
+		return this;
+	};
+	Postmonger.version = '0.0.14';
+
+	//Create a new Postmonger Connection
+	Connection = Postmonger.Connection = function (options) {
+		options = (typeof(options) === 'object') ? options : {};
+
+		var connect = options.connect || _window.parent;
+		var from = options.from || '*';
+		var to = options.to || '*';
+		var self = this;
+
+		//If string, grab based on id
+		if (typeof(connect) === 'string') {
+			connect = document.getElementById(connect);
+		}
+
+		//If no connection, check for jquery object
+		if (connect && !connect.postMessage && connect.jquery) {
+			connect = connect.get(0);
+		}
+
+		//If still no connection, check for iframe
+		if (connect && !connect.postMessage && (connect.contentWindow || connect.contentDocument)) {
+			connect = connect.contentWindow || connect.contentDocument;
+		}
+
+		//Throw warning if connection could not be made
+		if (!(connect && connect.postMessage)) {
+			if (_window.console && _window.console.warn) {
+				_window.console.warn(' Warning: Postmonger could not establish connection with ', options.connect);
+			}
+			return false;
+		}
+
+		self.connect = connect;
+		self.to = to;
+		self.from = from;
+
+		return self;
+	};
+
+	//Postmonger.Events - Hacked together from Backbone.Events and two Underscore functions.
+	Events = Postmonger.Events = function () {
+		var eventSplitter = /\s+/;
+		var self = this;
+
+		self._callbacks = {};
+
+		self._has = function (obj, key) {
+			return Object.prototype.hasOwnProperty.call(obj, key);
+		};
+
+		self._keys = function (obj) {
+			if (Object.keys) {
+				return Object.keys(obj);
+			}
+
+			if (typeof(obj)!=='object') {
+				throw new TypeError('Invalid object');
+			}
+
+			var keys = [];
+
+			for (var key in obj) {
+				if (self._has(obj, key)) {
+					keys[keys.length] = key;
+				}
+			}
+
+			return keys;
+		};
+
+		self.on = function (events, callback, context) {
+			var calls, event, node, tail, list;
+
+			if (!callback) {
+				return self;
+			}
+
+			events = events.split(eventSplitter);
+
+			self._callbacks = self._callbacks || {};
+			calls = self._callbacks;
+
+			while (event = events.shift()) {
+				list = calls[event];
+
+				node = (list) ? list.tail : {};
+				tail = {};
+
+				node.next = tail;
+				node.context = context;
+				node.callback = callback;
+
+				calls[event] = {
+					tail: tail,
+					next: (list) ? list.next : node
+				};
+			}
+
+			return self;
+		};
+
+		self.off = function (events, callback, context) {
+			var calls = self._callbacks;
+			var event, node, tail, cb, ctx;
+
+			if (!calls) {
+				return;
+			}
+
+			if (!(events || callback || context)) {
+				delete self._callbacks;
+				return self;
+			}
+
+			events = (events) ? events.split(eventSplitter) : self._keys(calls);
+
+			while (event = events.shift()) {
+				node = calls[event];
+				delete calls[event];
+				if (!node || !(callback || context)) {
+					continue;
+				}
+
+				tail = node.tail;
+				while ((node = node.next) !== tail) {
+					cb = node.callback;
+					ctx = node.context;
+					if (((callback && cb) !== callback) || ((context && ctx) !== context)) {
+						self.on(event, cb, ctx);
+					}
+				}
+			}
+
+			return self;
+		};
+
+		self.trigger = function (events) {
+			var event, node, calls, tail, args, all, rest;
+
+			if (!(calls = self._callbacks)) {
+				return self;
+			}
+
+			all = calls.all;
+			events = events.split(eventSplitter);
+			rest = Array.prototype.slice.call(arguments, 1);
+
+			while (event = events.shift()) {
+				if (node = calls[event]) {
+					tail = node.tail;
+					while ((node = node.next) !== tail) {
+						node.callback.apply(node.context || self, rest);
+					}
+				}
+				if (node = all) {
+					tail = node.tail;
+					args = [event].concat(rest);
+					while ((node = node.next) !== tail) {
+						node.callback.apply(node.context || self, args);
+					}
+				}
+			}
+
+			return self;
+		};
+
+		return self;
+	};
+
+	//Create a new Postmonger Session
+	Session = Postmonger.Session = function () {
+		var args = (arguments.length>0) ? Array.prototype.slice.call(arguments, 0) : [{}];
+		var connections = [];
+		var incoming = new Events();
+		var outgoing = new Events();
+		var self = this;
+		var connection, i, j, l, ln, postMessageListener;
+
+		//Session API hooks
+		self.on = incoming.on;
+		self.off = incoming.off;
+		self.trigger = outgoing.trigger;
+		self.end = function () {
+			incoming.off();
+			outgoing.off();
+			if (_window.removeEventListener) {
+				_window.removeEventListener('message', postMessageListener, false);
+			} else if (_window.detachEvent) {
+				_window.detachEvent('onmessage', postMessageListener);
+			}
+			return self;
+		};
+
+		//Establishing connections
+		for (i=0, l=args.length; i<l; i++) {
+			connection = new Connection(args[i]);
+			if (connection) {
+				for (j=0, ln=connections.length; j<ln; j++) {
+					if (
+						connections[j].connect === connection.connect &&
+						connections[j].from === connection.from &&
+						connections[j].to === connection.to
+					) {
+						connection = null;
+						break;
+					}
+				}
+				if (connection) {
+					connections.push(connection);
+				}
+			}
+		}
+
+		//Listener for incoming messages
+		postMessageListener = function(event){
+			var conn = null;
+			var message = [];
+			var data;
+			var k, len;
+
+			//Attempt to find the connection we're dealing with
+			for (k=0, len=connections.length; k<len; k++) {
+				if (connections[k].connect === event.source) {
+					conn = connections[k];
+					break;
+				}
+			}
+
+			//Check if we've found the connection
+			if (!conn) {
+				return false;
+			}
+
+			//Check if the message is from the expected origin
+			if (conn.from !== '*' && conn.from !== event.origin) {
+				return false;
+			}
+
+			//Check the data that's been passed
+			try{
+				data = JSON.parse(event.data);
+				if(!data.e){
+					return false;
+				}
+			}catch(e){
+				return false;
+			}
+
+			//Format the passed in data
+			message.push(data.e);
+			delete data.e;
+			for (k in data) {
+				message.push(data[k]);
+			}
+
+			//Send the message
+			incoming['trigger'].apply(root, message);
+		};
+
+		//Add the listener
+		if (_window.addEventListener) {
+			_window.addEventListener('message', postMessageListener, false);
+		} else if(_window.attachEvent) {
+			_window.attachEvent('onmessage', postMessageListener);
+		} else{
+			if (_window.console && _window.console.warn) {
+				_window.console.warn('WARNING: Postmonger could not listen for messages on window %o', _window);
+			}
+			return false;
+		}
+
+		//Sending outgoing messages
+		outgoing.on('all', function () {
+			var args = Array.prototype.slice.call(arguments, 0);
+			var message = {};
+			var k, len;
+
+			message.e = args[0];
+
+			for (k=1, len=args.length; k<len; k++) {
+				message['a' + k] = args[k];
+			}
+
+			for (k=0, len=connections.length; k<len; k++) {
+				connections[k].connect.postMessage(JSON.stringify(message), connections[k].to);
+			}
+		});
+
+		return self;
+	};
+
+	return Postmonger;
+}));
+
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=discount-code-activity.js.map
