@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function main() {
 function onInitActivity(payload) {
   // set the activity object from this payload. We'll refer to this object as we
   // modify it before saving.
-  console.log("payloadpayloadpayload", Contact)
+  console.log("payloadpayloadpayload", payload);
   activity = payload;
 
   const hasInArguments = Boolean(
@@ -95,7 +95,10 @@ async function onDoneButtonClick() {
       emailAddress: activity.arguments.execute.inArguments[0].emailAddress,
     },
   ];
-  console.log('activity before setting discount value', activity.arguments.execute.inArguments[0])
+  console.log(
+    "activity before setting discount value",
+    activity.arguments.execute.inArguments[0]
+  );
 
   // you can set the name that appears below the activity with the name property
   activity.name = `Issue ${activity.arguments.execute.inArguments[0].discount}% Code`;
@@ -104,7 +107,6 @@ async function onDoneButtonClick() {
   console.log("Sending message back to updateActivity");
   console.log("saving\n", JSON.stringify(activity, null, 4));
   console.log("--------------------------------------------------------------");
-
 
   connection.trigger("updateActivity", activity);
 }

@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function main() {
 function onInitActivity(payload) {
   // set the activity object from this payload. We'll refer to this object as we
   // modify it before saving.
-  console.log("payloadpayloadpayload", Contact);
+  console.log("payloadpayloadpayload", payload);
   activity = payload;
   const hasInArguments = Boolean(activity.arguments && activity.arguments.execute && activity.arguments.execute.inArguments && activity.arguments.execute.inArguments.length > 0);
   const inArguments = hasInArguments ? activity.arguments.execute.inArguments : [];
@@ -182,7 +182,7 @@ async function onDoneButtonClick() {
     discount: option.value,
     emailAddress: activity.arguments.execute.inArguments[0].emailAddress
   }];
-  console.log('activity before setting discount value', activity.arguments.execute.inArguments[0]);
+  console.log("activity before setting discount value", activity.arguments.execute.inArguments[0]);
 
   // you can set the name that appears below the activity with the name property
   activity.name = `Issue ${activity.arguments.execute.inArguments[0].discount}% Code`;
