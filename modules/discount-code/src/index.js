@@ -92,7 +92,7 @@ async function onDoneButtonClick() {
   activity.arguments.execute.inArguments = [
     {
       discount: option.value,
-      emailAddress: activity.arguments.execute.inArguments.emailAddress,
+      emailAddress:'{{EmailAddress}}',
     },
   ];
   console.log('activity before setting discount value', activity.arguments.execute.inArguments[0])
