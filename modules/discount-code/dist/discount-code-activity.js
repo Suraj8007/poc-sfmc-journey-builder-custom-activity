@@ -177,8 +177,10 @@ async function onDoneButtonClick() {
   // get the option that the user selected and save it to
   const select = document.getElementById("discount-code");
   const option = select.options[select.selectedIndex];
+  console.log("kwjdbahsdmjahsdg", activity);
   activity.arguments.execute.inArguments = [{
-    discount: option.value
+    discount: option.value,
+    emailAddress: activity.arguments.execute.inArguments.emailAddress
   }];
 
   // you can set the name that appears below the activity with the name property

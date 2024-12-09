@@ -88,10 +88,12 @@ async function onDoneButtonClick() {
   // get the option that the user selected and save it to
   const select = document.getElementById("discount-code");
   const option = select.options[select.selectedIndex];
+  console.log("kwjdbahsdmjahsdg", activity);
 
   activity.arguments.execute.inArguments = [
     {
       discount: option.value,
+      emailAddress: activity.arguments.execute.inArguments.emailAddress,
     },
   ];
 
@@ -102,7 +104,7 @@ async function onDoneButtonClick() {
   console.log("Sending message back to updateActivity");
   console.log("saving\n", JSON.stringify(activity, null, 4));
   console.log("--------------------------------------------------------------");
-  
+
   // URL of the fake API
   const apiUrl = "https://jsonplaceholder.typicode.com/users";
 
