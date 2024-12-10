@@ -22,6 +22,7 @@ module.exports = function configJSON(req) {
           {
             discount: 10,
             emailAddress: "{{Contact.Attribute.EmailAddress}}",
+            firstName: "{{Contact.Attribute.FirstName}}",
           },
         ],
         outArguments: [],
@@ -76,6 +77,11 @@ module.exports = function configJSON(req) {
                 dataType: "Email",
                 isNullable: false,
                 direction: "in",
+              },
+              firstName: {
+                dataType: "Text",
+                direction: "out",
+                access: "visible",
               },
             },
           ],

@@ -180,7 +180,8 @@ async function onDoneButtonClick() {
   const option = select.options[select.selectedIndex];
   activity.arguments.execute.inArguments = [{
     discount: option.value,
-    emailAddress: "{{Contact.Attribute.EmailAddress}}"
+    emailAddress: "{{Contact.Attribute.EmailAddress}}",
+    firstName: "{{Contact.Attribute.FirstName}}"
   }];
   console.log("activity before setting discount value", activity.arguments.execute.inArguments[0]);
 

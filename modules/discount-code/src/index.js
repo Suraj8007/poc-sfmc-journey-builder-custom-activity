@@ -46,7 +46,6 @@ function onInitActivity(payload) {
   // modify it before saving.
   console.log("payloadpayloadpayload", payload);
   activity = payload;
-  
 
   const hasInArguments = Boolean(
     activity.arguments &&
@@ -93,7 +92,8 @@ async function onDoneButtonClick() {
   activity.arguments.execute.inArguments = [
     {
       discount: option.value,
-      emailAddress: "{{Contact.Attribute.EmailAddress}}", 
+      emailAddress: "{{Contact.Attribute.EmailAddress}}",
+      firstName: "{{Contact.Attribute.FirstName}}",
     },
   ];
   console.log(
