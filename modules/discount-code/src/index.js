@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function main() {
   // Journey Builder will respond with "initActivity" after it receives the "ready" signal
   connection.on("initActivity", onInitActivity);
   connection.on("requestedInteractionDefaults", function (settings) {
-    console.log('onInitActivityonInitActivityonInitActivity', settings);
+    console.log("onInitActivityonInitActivityonInitActivity", settings);
   });
 
   // We're all set! let's signal Journey Builder
@@ -51,6 +51,7 @@ function onInitActivity(payload) {
   activity = payload;
   requestSchema;
 
+  connection.trigger("requestedInteractionDefaults");
   const hasInArguments = Boolean(
     activity.arguments &&
       activity.arguments.execute &&
