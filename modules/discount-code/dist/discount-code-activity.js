@@ -155,8 +155,7 @@ function onInitActivity(payload) {
       let attr = schema[i].key;
       let keyIndex = attr.lastIndexOf(".") + 1;
       inArg[attr.substring(keyIndex)] = "{{" + attr + "}}";
-      activity["arguments"].execute.inArguments[0][`${attr.substring(keyIndex)}`] = "newValue";
-      // {...{activity["arguments"].execute.inArguments[0],...inArg};
+      activity["arguments"].execute.inArguments[0][`${attr.substring(keyIndex)}`] = "{{" + attr + "}}";
     }
     console.log("jkdbkahdjadhajdh", activity);
   });

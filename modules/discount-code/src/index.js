@@ -58,8 +58,7 @@ function onInitActivity(payload) {
       inArg[attr.substring(keyIndex)] = "{{" + attr + "}}";
       activity["arguments"].execute.inArguments[0][
         `${attr.substring(keyIndex)}`
-      ] = "newValue";
-      // {...{activity["arguments"].execute.inArguments[0],...inArg};
+      ] = "{{" + attr + "}}";
     }
     console.log("jkdbkahdjadhajdh", activity);
   });
