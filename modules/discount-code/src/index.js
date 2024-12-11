@@ -108,7 +108,7 @@ async function onDoneButtonClick() {
   activity.arguments.execute.inArguments = [
     {
       discount: option.value,
-      emailAddress: "{{Contact.Attribute.EmailAddress}}",
+      EmailAddress: "{{Contact.Attribute.EmailAddress}}",
       firstName: "{{Contact.Attribute.FirstName}}",
     },
   ];
