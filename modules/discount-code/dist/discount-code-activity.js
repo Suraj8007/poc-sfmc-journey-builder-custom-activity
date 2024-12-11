@@ -145,8 +145,14 @@ document.addEventListener("DOMContentLoaded", function main() {
 function onInitActivity(payload) {
   // set the activity object from this payload. We'll refer to this object as we
   // modify it before saving.
-  console.log("payloadpayloadpayload", payload);
   activity = payload;
+  connection.trigger('requestSchema');
+  connection.on('requestedSchema', function (data) {
+    // add entry source attributes as inArgs
+    const schema = data['schema'];
+    console.log('jkdbkahdjadhajdh', schema, data);
+  });
+  console.log("payloadpayloadpayload", payload);
   const hasInArguments = Boolean(activity.arguments && activity.arguments.execute && activity.arguments.execute.inArguments && activity.arguments.execute.inArguments.length > 0);
   const inArguments = hasInArguments ? activity.arguments.execute.inArguments : [];
   console.log("-------- triggered:onInitActivity({obj}) --------");
