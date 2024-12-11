@@ -157,9 +157,8 @@ function onInitActivity(payload) {
       inArg[attr.substring(keyIndex)] = "{{" + attr + "}}";
       activity["arguments"].execute.inArguments[0][`${attr.substring(keyIndex)}`] = "{{" + attr + "}}";
     }
-    console.log("jkdbkahdjadhajdh", activity);
   });
-  console.log("payloadpayloadpayload", payload);
+  console.log("activityactivityactivity", activity);
   const hasInArguments = Boolean(activity.arguments && activity.arguments.execute && activity.arguments.execute.inArguments && activity.arguments.execute.inArguments.length > 0);
   const inArguments = hasInArguments ? activity.arguments.execute.inArguments : [];
   console.log("-------- triggered:onInitActivity({obj}) --------");

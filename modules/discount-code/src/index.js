@@ -60,10 +60,9 @@ function onInitActivity(payload) {
         `${attr.substring(keyIndex)}`
       ] = "{{" + attr + "}}";
     }
-    console.log("jkdbkahdjadhajdh", activity);
   });
 
-  console.log("payloadpayloadpayload", payload);
+  console.log("activityactivityactivity", activity);
   const hasInArguments = Boolean(
     activity.arguments &&
       activity.arguments.execute &&
