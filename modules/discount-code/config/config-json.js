@@ -75,7 +75,7 @@ module.exports = function configJSON(req) {
                 direction: "out",
                 access: "visible",
               },
-              emailAddress: {
+              EmailAddress: {
                 dataType: "Email",
                 isNullable: false,
                 direction: "in",
