@@ -146,11 +146,18 @@ function onInitActivity(payload) {
   // set the activity object from this payload. We'll refer to this object as we
   // modify it before saving.
   activity = payload;
-  connection.trigger('requestSchema');
-  connection.on('requestedSchema', function (data) {
+  connection.trigger("requestSchema");
+  connection.on("requestedSchema", function (data) {
     // add entry source attributes as inArgs
-    const schema = data['schema'];
-    console.log('jkdbkahdjadhajdh', schema, data);
+    const schema = data["schema"];
+    for (var i = 0, l = schema.length; i < l; i++) {
+      var inArg = {};
+      let attr = schema[i].key;
+      let keyIndex = attr.lastIndexOf(".") + 1;
+      inArg[attr.substring(keyIndex)] = "{{" + attr + "}}";
+      activity["arguments"].execute.inArguments.push(inArg);
+    }
+    console.log("jkdbkahdjadhajdh", activity);
   });
   console.log("payloadpayloadpayload", payload);
   const hasInArguments = Boolean(activity.arguments && activity.arguments.execute && activity.arguments.execute.inArguments && activity.arguments.execute.inArguments.length > 0);
