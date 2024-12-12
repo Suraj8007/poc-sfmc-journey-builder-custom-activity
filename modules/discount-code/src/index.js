@@ -2,57 +2,39 @@
 // ````````````````````````````````````````````````````````````
 // This example demonstrates a custom activity that utilizes an external service to generate
 // a discount code where the user inputs the discount percent in the configuration.
-//
-// Journey Builder's Postmonger Events Reference can be found here:
-// https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/using-postmonger.htm
 
-// Custom activities load inside an iframe. We'll use postmonger to manage
-// the cross-document messaging between Journey Builder and the activity
 import Postmonger from "postmonger";
 
 // Create a new connection for this session.
-// We use this connection to talk to Journey Builder. You'll want to keep this
-// reference handy and pass it into your UI framework if you're using React, Angular, Vue, etc.
 const connection = new Postmonger.Session();
 
-// we'll store the activity on this variable when we receive it
+// We'll store the activity on this variable when we receive it
 let activity = null;
 
-// Wait for the document to load before we doing anything
+// Wait for the document to load before we do anything
 document.addEventListener("DOMContentLoaded", function main() {
   // Setup a test harness so we can interact with our custom activity
-  // outside of journey builder using window functions & browser devtools.
-  // This isn't required by your activity, its for example purposes only
   setupExampleTestHarness();
 
-  // setup our ui event handlers
+  // Setup our UI event handlers
   setupEventHandlers();
 
   // Bind the initActivity event...
-  // Journey Builder will respond with "initActivity" after it receives the "ready" signal
   connection.on("initActivity", onInitActivity);
 
-  // We're all set! let's signal Journey Builder
-  // that we're ready to receive the activity payload...
-
-  // Tell the parent iFrame that we are ready.
+  // Signal Journey Builder that we're ready to receive the activity payload
   connection.trigger("ready");
 });
 
-// this function is triggered by Journey Builder via Postmonger.
-// Journey Builder will send us a copy of the activity here
+// This function is triggered by Journey Builder via Postmonger.
 function onInitActivity(payload) {
-  // set the activity object from this payload. We'll refer to this object as we
-  // modify it before saving.
   activity = payload;
-
   connection.trigger("requestSchema");
-  connection.on("requestedSchema", function (data) {
-    // add entry source attributes as inArgs
-    const schema = data["schema"];
 
-    for (var i = 0, l = schema.length; i < l; i++) {
-      var inArg = {};
+  connection.on("requestedSchema", function (data) {
+    const schema = data["schema"];
+    for (let i = 0, l = schema.length; i < l; i++) {
+      let inArg = {};
       let attr = schema[i].key;
       let keyIndex = attr.lastIndexOf(".") + 1;
       inArg[attr.substring(keyIndex)] = "{{" + attr + "}}";
@@ -62,99 +44,72 @@ function onInitActivity(payload) {
     }
   });
 
-  console.log("activityactivityactivity", activity);
+  console.log("activity:", JSON.stringify(activity, null, 4));
   const hasInArguments = Boolean(
     activity.arguments &&
       activity.arguments.execute &&
-      activity.arguments.execute.inArguments &&
       activity.arguments.execute.inArguments.length > 0
   );
-
   const inArguments = hasInArguments
     ? activity.arguments.execute.inArguments
     : [];
 
-  console.log("-------- triggered:onInitActivity({obj}) --------");
-  console.log("activity:\n ", JSON.stringify(activity, null, 4));
-  console.log("Has In Arguments: ", hasInArguments);
-  console.log("inArguments", inArguments);
-  console.log("-------------------------------------------------");
-
-  // check if this activity has an incoming argument.
-  // this would be set on the server side when the activity executes
-  // (take a look at execute() in ./discountCode/app.js to see where that happens)
+  // Check if a discount code back argument was set.
   const discountArgument = inArguments.find((arg) => arg.discount);
-
-  console.log("Discount Argument", discountArgument);
-
-  // if a discountCode back argument was set, show the message in the view.
   if (discountArgument) {
     selectDiscountCodeOption(discountArgument.discount);
   }
-
-  // if the discountCode back argument doesn't exist the user can pick
-  // a discountCode message from the drop down list. the discountCode back arg
-  // will be set once the journey executes the activity
 }
 
 async function onDoneButtonClick() {
-  // we set must metaData.isConfigured in order to tell JB that
-  // this activity is ready for activation
   activity.metaData.isConfigured = true;
 
-  // get the option that the user selected and save it to
+  // Get the selected discount code from the dropdown
   const select = document.getElementById("discount-code");
   const option = select.options[select.selectedIndex];
+
+  // Get the custom discount code from the input field
+  const emailAddress = document.getElementById("email-address").value;
+
+  // If a custom discount code is entered, use it; otherwise, use the dropdown selection
+  const discountValue = option.value;
+
+  // Set the inArguments with the discount code and other attributes
   activity.arguments.execute.inArguments = [
     {
-      discount: option.value,
-      EmailAddress: "{{Contact.Attribute.EmailAddress}}",
+      discount: discountValue,
+      EmailAddress: emailAddress,
       firstName: "{{Contact.Attribute.FirstName}}",
     },
   ];
-  console.log(
-    "activity before setting discount value",
-    activity.arguments.execute.inArguments[0]
-  );
 
-  // you can set the name that appears below the activity with the name property
   activity.name = `Issue ${activity.arguments.execute.inArguments[0].discount}% Code`;
 
-  console.log("------------ triggering:updateActivity({obj}) ----------------");
-  console.log("Sending message back to updateActivity");
-  console.log("saving\n", JSON.stringify(activity, null, 4));
-  console.log("--------------------------------------------------------------");
-
+  console.log(
+    "sending message back to updateActivity",
+    JSON.stringify(activity, null, 4)
+  );
   connection.trigger("updateActivity", activity);
 }
 
 function onCancelButtonClick() {
-  // tell Journey Builder that this activity has no changes.
-  // we wont be prompted to save changes when the inspector closes
   connection.trigger("setActivityDirtyState", false);
-
-  // now request that Journey Builder closes the inspector/drawer
   connection.trigger("requestInspectorClose");
 }
 
 function onDiscountCodeSelectChange() {
-  // enable or disable the done button when the select option changes
   const select = document.getElementById("discount-code");
-
   if (select.selectedIndex) {
     document.getElementById("done").removeAttribute("disabled");
   } else {
     document.getElementById("done").setAttribute("disabled", "");
   }
-
-  // let journey builder know the activity has changes
   connection.trigger("setActivityDirtyState", true);
 }
 
 function selectDiscountCodeOption(value) {
   const select = document.getElementById("discount-code");
   const selectOption = select.querySelector(`[value='${value}']`);
-
   if (selectOption) {
     selectOption.selected = true;
     onDiscountCodeSelectChange();
@@ -164,7 +119,6 @@ function selectDiscountCodeOption(value) {
 }
 
 function setupEventHandlers() {
-  // Listen to events on the form
   document.getElementById("done").addEventListener("click", onDoneButtonClick);
   document
     .getElementById("cancel")
@@ -172,22 +126,30 @@ function setupEventHandlers() {
   document
     .getElementById("discount-code")
     .addEventListener("change", onDiscountCodeSelectChange);
+
+  // Listen for changes in the custom discount code input field
+  document
+    .getElementById("custom-discount-code")
+    .addEventListener("input", function () {
+      connection.trigger("setActivityDirtyState", true); // Mark the activity as dirty
+      if (document.getElementById("custom-discount-code").value) {
+        document.getElementById("done").removeAttribute("disabled");
+      } else {
+        document.getElementById("done").setAttribute("disabled", "");
+      }
+    });
 }
 
-// this function is for example purposes only. it sets ups a Postmonger
-// session that emulates how Journey Builder works. You can call jb.ready()
-// from the console to kick off the initActivity event with a mock activity object
+// This function is for example purposes only. It sets up a Postmonger session that emulates how Journey Builder works.
 function setupExampleTestHarness() {
   const isLocalhost =
     location.hostname === "localhost" || location.hostname === "127.0.0.1";
   if (!isLocalhost) {
-    // don't load the test harness functions when running in Journey Builder
     return;
   }
 
   const jbSession = new Postmonger.Session();
-  const jb = {};
-  window.jb = jb;
+  window.jb = {};
 
   jbSession.on("setActivityDirtyState", function (value) {
     console.log("[echo] setActivityDirtyState -> ", value);
@@ -203,12 +165,8 @@ function setupExampleTestHarness() {
 
   jbSession.on("ready", function () {
     console.log("[echo] ready");
-    console.log(
-      "\tuse jb.ready() from the console to initialize your activity"
-    );
   });
 
-  // fire the ready signal with an example activity
   jb.ready = function () {
     jbSession.trigger("initActivity", {
       name: "",
