@@ -22,9 +22,8 @@ module.exports = function configJSON(req) {
           {
             discount: 10,
             EmailAddress:
-              "{{Event.DEAudience-8050b33c-84f6-0a49-b6b7-f6744f1565d1.EmailAddress}}",
-            firstName:
-              "'{{Event.DEAudience-8050b33c-84f6-0a49-b6b7-f6744f1565d1.EmailAddress}}",
+            "{{Event.DEAudience-8050b33c-84f6-0a49-b6b7-f6744f1565d1."EmailAddress"}}",
+            
           },
         ],
         outArguments: [],
