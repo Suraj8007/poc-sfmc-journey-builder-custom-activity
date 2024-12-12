@@ -203,9 +203,9 @@ function setupEventHandlers() {
   document.getElementById("discount-code").addEventListener("change", onDiscountCodeSelectChange);
 
   // Listen for changes in the custom discount code input field
-  document.getElementById("custom-discount-code").addEventListener("input", function () {
+  document.getElementById("email-address").addEventListener("input", function () {
     connection.trigger("setActivityDirtyState", true); // Mark the activity as dirty
-    if (document.getElementById("custom-discount-code").value) {
+    if (document.getElementById("email-address").value) {
       document.getElementById("done").removeAttribute("disabled");
     } else {
       document.getElementById("done").setAttribute("disabled", "");
